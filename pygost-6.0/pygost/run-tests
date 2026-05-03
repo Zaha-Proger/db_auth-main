@@ -1,0 +1,8 @@
+#!/bin/sh
+
+export PYTHONPATH=$PYTHONPATH:..
+set -x
+for t in gost28147 gost28147_mac gost341194 gost34112012 gost3410 gost3410_vko wrap gost3412 gost3413 mgm kdf sespake x509 cms pfx ; do
+    ${PYTHON:-python} -m unittest test_$t
+done
+

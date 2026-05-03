@@ -1,0 +1,22 @@
+No additional dependencies except Python 2.7/3.x interpreter are required.
+
+Preferable way is to [Download] tarball with the signature:
+
+    $ v=6.0
+    $ fetch http://www.pygost.cypherpunks.su/pygost-$v.tar.zst
+    $ fetch http://www.pygost.cypherpunks.su/pygost-$v.tar.zst.{asc,sig}
+    [Integrity] verify
+    $ zstd -d <pygost-$v.tar.zst | tar xf -
+    $ cd pygost-$v
+    $ python setup.py install
+
+You can obtain development source code with:
+    git clone git://git.cypherpunks.su/pygost.git
+You can also use URLs instead:
+    anongit@master.git.stargrave.org:cypherpunks.su/pygost.git
+    anongit@slave.git.stargrave.org:cypherpunks.su/pygost.git
+    anongit@master.git.cypherpunks.su:cypherpunks.su/pygost.git
+    anongit@slave.git.cypherpunks.su:cypherpunks.su/pygost.git
+    git://git.stargrave.org/pygost.git
+    git://y.git.stargrave.org/pygost.git
+    git://y.git.cypherpunks.su/pygost.git
