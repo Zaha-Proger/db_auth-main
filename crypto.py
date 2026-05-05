@@ -10,7 +10,7 @@ def derive_key(password: str, salt: bytes) -> bytes:
 
 def encrypt_file(in_file, out_file, password):
     salt = os.urandom(16)
-    iv = os.urandom(8)  # ← ВАЖНО: 8 байт!
+    iv = os.urandom(8)
 
     key = derive_key(password, salt)
     cipher = GOST3412Kuznechik(key)
@@ -28,7 +28,7 @@ def decrypt_file(in_file, out_file, password):
         raw = f.read()
 
     salt = raw[:16]
-    iv = raw[16:24]   # ← 8 байт
+    iv = raw[16:24]
     data = raw[24:]
 
     key = derive_key(password, salt)
