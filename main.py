@@ -331,21 +331,9 @@ def open_app_logs():
         textbox.configure(state="disabled")
     frame_buttons = CTK.CTkFrame(master=frame)
     frame_buttons.pack(fill="x")
-    CTK.CTkButton(
-        frame_buttons,
-        text="Все",
-        command=lambda: [filter_var.set("ALL"), load_logs()]
-    ).pack(side="left", padx=10, pady=5)
-    CTK.CTkButton(
-        frame_buttons,
-        text="INFO",
-        command=lambda: [filter_var.set("INFO"), load_logs()]
-    ).pack(side="left", padx=10)
-    CTK.CTkButton(
-        frame_buttons,
-        text="ERROR",
-        command=lambda: [filter_var.set("ERROR"), load_logs()]
-    ).pack(side="left", padx=10)
+    CTK.CTkButton(frame_buttons,text="Все", command=lambda: [filter_var.set("ALL"), load_logs()]).pack(side="left", padx=10, pady=5)
+    CTK.CTkButton(frame_buttons,text="INFO",command=lambda: [filter_var.set("INFO"), load_logs()]).pack(side="left", padx=10)
+    CTK.CTkButton(frame_buttons,text="ERROR",command=lambda: [filter_var.set("ERROR"), load_logs()]).pack(side="left", padx=10)
     textbox = CTK.CTkTextbox(master=frame)
     textbox.pack(fill="both", expand=True)
     load_logs()
