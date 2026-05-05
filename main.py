@@ -119,17 +119,20 @@ def search(db, table, flag, records):
         if flag == "secure":
             if ":" in req:
                 db.cursor.execute(f"SELECT * FROM authInfo_with_date WHERE date >= '{req[:10]}' AND date <= '{req[11:]}'")
-            else: db.cursor.execute("SELECT * FROM authInfo_with_date WHERE desc LIKE ? OR date LIKE ? OR proc LIKE ?", ('%'+req+'%','%'+req+'%','%'+req+'%',))
+            else: db.cursor.execute("SELECT * FROM authInfo_with_date WHERE desc LIKE ? OR date LIKE ? OR proc LIKE ?", 
+                                    ('%'+req+'%','%'+req+'%','%'+req+'%',))
         elif flag == "wtmp":
             if ":" in req:
                 db.cursor.execute(f"SELECT * FROM wtmp_with_date WHERE date >= '{req[:10]}' AND date <= '{req[11:]}'")
             else:
-                db.cursor.execute("SELECT * FROM wtmp_with_date WHERE user LIKE ? OR tty LIKE ? OR host LIKE ? OR date LIKE ? OR time LIKE ? OR session LIKE ?", ('%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%',))
+                db.cursor.execute("SELECT * FROM wtmp_with_date WHERE user LIKE ? OR tty LIKE ? OR host LIKE ? OR date LIKE ? 
+                OR time LIKE ? OR session LIKE ?", ('%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%',))
         elif flag == "btmp":
             if ":" in req:
                 db.cursor.execute(f"SELECT * FROM btmp_with_date WHERE date >= '{req[:10]}' AND date <= '{req[11:]}'")
             else:
-                db.cursor.execute("SELECT * FROM btmp_with_date WHERE user LIKE ? OR tty LIKE ? OR host LIKE ? OR date LIKE ? OR time LIKE ? OR session LIKE ?", ('%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%',))
+                db.cursor.execute("SELECT * FROM btmp_with_date WHERE user LIKE ? OR tty LIKE ? OR host LIKE ? OR date LIKE ? 
+                OR time LIKE ? OR session LIKE ?", ('%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%','%'+req+'%',))
         results = db.cursor.fetchall()
 
         for item in table.get_children():
