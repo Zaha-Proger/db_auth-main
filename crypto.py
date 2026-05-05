@@ -11,30 +11,22 @@ def derive_key(password: str, salt: bytes) -> bytes:
 def encrypt_file(in_file, out_file, password):
     salt = os.urandom(16)
     iv = os.urandom(8)
-
     key = derive_key(password, salt)
     cipher = GOST3412Kuznechik(key)
-
     with open(in_file, 'rb') as f:
         data = f.read()
-
     encrypted = ctr(cipher.encrypt, BLOCK_SIZE, data, iv)
-
     with open(out_file, 'wb') as f:
         f.write(salt + iv + encrypted)
 
 def decrypt_file(in_file, out_file, password):
     with open(in_file, 'rb') as f:
         raw = f.read()
-
     salt = raw[:16]
     iv = raw[16:24]
     data = raw[24:]
-
     key = derive_key(password, salt)
     cipher = GOST3412Kuznechik(key)
-
     decrypted = ctr(cipher.encrypt, BLOCK_SIZE, data, iv)
-
     with open(out_file, 'wb') as f:
         f.write(decrypted)
