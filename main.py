@@ -18,80 +18,58 @@ log_info("Приложение запущенно")
 
 def ask_password():
     password_value = {"value": None}
-
     win = CTK.CTk()
     win.geometry("300x150+500+300")
     win.title("Введите пароль")
     win.resizable(False, False)
-
     label = CTK.CTkLabel(win, text="Пароль для БД:")
     label.pack(pady=10)
-
     entry = CTK.CTkEntry(win, width=200, show="*")
     entry.pack(pady=5)
     entry.focus()
-
     def submit():
         password_value["value"] = entry.get()
         win.quit()
         win.destroy()
-
     def on_enter(event):
         submit()
-
     btn = CTK.CTkButton(win, text="ОК", command=submit)
     btn.pack(pady=10)
-
     win.bind('<Return>', on_enter)
-
     win.mainloop()
-
     return password_value["value"]
 
 def load_app():
     global db, parser, root
-    
     log_info("Попытка входа в приложение")
-
     enc_db = "./auth_db.sqlite.enc"
     temp_db = "./auth_db_temp.sqlite"
-
     password = ask_password()
-
     if not password:
         log_error("Пароль не введен")
         root.destroy()
         return
-
     try:
         if os.path.exists(temp_db):
             os.remove(temp_db)
-
         if os.path.exists(enc_db):
             decrypt_file(enc_db, temp_db, password)
-
         db = DB(temp_db)
         db.cursor.execute("SELECT name FROM sqlite_master LIMIT 1;")
-
     except Exception:
         log_error("Ошибка входа: неверный пароль или повреждена БД")
         messagebox.showerror(
             "Ошибка",
             "Неверный пароль или повреждена база данных"
         )
-
         if os.path.exists(temp_db):
             os.remove(temp_db)
-
         root.destroy()
         return
-
     db.password = password
     db.enc_path = enc_db
     db.temp_path = temp_db
-
     parser = ParseLog(db)
-
     update_db()
     create_root_win()
 
