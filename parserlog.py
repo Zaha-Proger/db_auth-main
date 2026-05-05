@@ -5,7 +5,6 @@ from datetime import datetime
 from subprocess import run, STDOUT, PIPE
 
 class ParseLog():
-    
     def __init__(self, db):
         self.db = db
 
