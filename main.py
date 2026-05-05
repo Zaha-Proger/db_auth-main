@@ -294,45 +294,32 @@ def open_check_win(text_info):
 
 def open_check_all():
     global root
-
     frame_info = CTK.CTkFrame(master=root)
     frame_info.grid(row=0, column=0, padx=5, sticky="n")
-
     frame_buttons = CTK.CTkFrame(master = frame_info)
     frame_buttons.pack(fill="both", expand=True)
-    
     b_back = CTK.CTkButton(master=frame_buttons, text="назад", command= lambda: frame_info.grid_remove())
     b_back.grid(row=0, column = 0, padx = 20, pady = 20)
-
     b_search = CTK.CTkButton(master=frame_buttons, text="поиск", command= lambda: open_check_win(text_info))
     b_search.grid(row=0, column = 2, pady = 20)
-
     text_info = CTK.CTkTextbox(master=frame_info, width=800, height=500)
     text_info.pack()
-
     check_date(text_info, str(datetime.now())[:10])
 
 def open_app_logs():
     from app_logger import LOG_FILE
-
     log_window = CTK.CTkToplevel()
     log_window.geometry("900x550")
     log_window.title("Журнал приложения")
-
     frame = CTK.CTkFrame(master=log_window)
     frame.pack(fill="both", expand=True)
-
-    # === Фильтр ===
     filter_var = CTK.StringVar(value="ALL")
-
     def load_logs():
         textbox.configure(state="normal")
         textbox.delete("0.0", "end")
-
         try:
             with open(LOG_FILE, "r", encoding="utf-8") as f:
                 lines = f.readlines()
-
                 for line in lines:
                     if filter_var.get() == "ALL":
                         textbox.insert("end", line)
@@ -340,39 +327,28 @@ def open_app_logs():
                         textbox.insert("end", line)
                     elif filter_var.get() == "ERROR" and "ERROR" in line:
                         textbox.insert("end", line)
-
         except Exception as e:
             textbox.insert("0.0", f"Ошибка чтения логов: {e}")
-
         textbox.configure(state="disabled")
-
-    # === Кнопки фильтра ===
     frame_buttons = CTK.CTkFrame(master=frame)
     frame_buttons.pack(fill="x")
-
     CTK.CTkButton(
         frame_buttons,
         text="Все",
         command=lambda: [filter_var.set("ALL"), load_logs()]
     ).pack(side="left", padx=10, pady=5)
-
     CTK.CTkButton(
         frame_buttons,
         text="INFO",
         command=lambda: [filter_var.set("INFO"), load_logs()]
     ).pack(side="left", padx=10)
-
     CTK.CTkButton(
         frame_buttons,
         text="ERROR",
         command=lambda: [filter_var.set("ERROR"), load_logs()]
     ).pack(side="left", padx=10)
-
-    # === Поле вывода ===
     textbox = CTK.CTkTextbox(master=frame)
     textbox.pack(fill="both", expand=True)
-
-    # первая загрузка
     load_logs()
 
 def create_root_win():
