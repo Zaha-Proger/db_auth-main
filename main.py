@@ -277,18 +277,14 @@ def close_check_win(text_info, win):
     win.destroy()
 
 def open_check_win(text_info):
-
     check_window = CTK.CTkToplevel()
     check_window.geometry("300x100+400+300")
     check_window.title("события по дате")
     check_window.resizable(False, False)
-
     search_entry = CTK.CTkEntry(master=check_window,  width = 250)
     search_entry.pack(padx = 20, pady = 20)
-
     b_cancel = CTK.CTkButton(master=check_window, width=100, text="отмена", command= lambda: close_check_win(text_info, check_window))
     b_cancel.place(relx = 0.09, rely = 0.6)
-
     b_search = CTK.CTkButton(master=check_window, width=100, text="поиск", command= lambda: check_date(text_info, search_entry.get()))
     b_search.place(relx = 0.59, rely = 0.6)
 
